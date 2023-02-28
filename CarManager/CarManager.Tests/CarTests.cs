@@ -97,8 +97,7 @@ namespace CarManager.Tests
     }
 
 
-    [TestCase] //âñè÷êè ñëó÷àè, ïðè êîèòî ñå õâúðëÿ èçêëþ÷åíèå
-               //TO DO
+    [TestCase] 
     public void ValidateAllProperties(string make, string model, double fuelConsumption, double fuelCapacity)
     {
         //TO DO
