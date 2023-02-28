@@ -81,8 +81,15 @@ namespace CarManager.Tests
 
             [Test]
             public void FuelCapacityShouldThrowArgExWhenIsZero()
+            
             {
-                
+                string make ="nnnnn" ;
+                string model = "aaa";
+                double fuelConsumption = 5;
+                double fuelCapacity = 0;
+
+                Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
+
             }
 
             [Test]
