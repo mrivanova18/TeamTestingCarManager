@@ -48,9 +48,16 @@ namespace CarManager.Tests
             [Test]
             public void MakeShouldThrowArgExWhenNameIsNull()
             {
+            string make = null;
+            string model = "aaa";
+            double fuelConsumption = 5;
+            double fuelCapacity = 40;
 
-                //TO DO
-            }
+            Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
+
+
+
+        }
 
             [Test]
             public void FuelConsumptionShouldThrowArgExWhenIsBellowZero()
