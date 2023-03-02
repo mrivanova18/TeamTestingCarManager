@@ -117,24 +117,28 @@ namespace CarManager.Tests
         }
 
         [Test]        
-        public void ShouldRefuelThrowArgExWhenInputAmountIsBellowZero(double inputAmount)
+        public void ShouldRefuelThrowArgExWhenInputAmountIsBellowZero()
         {
-            Car car = new Car("aaa", "bbb", 5, 50);           
-            Assert.Throws<ArgumentException>(() => car.Refuel(-6));
+            Car car = new Car("aaa", "bbb", 5, 50);
+            double fuelToRefuel = -6;
+            Assert.Throws<ArgumentException>(() => car.Refuel(fuelToRefuel));
         }
 
         [Test]
         public void ShouldDriveNormally()
         {
             Car car = new Car("Vw", "Golf", 2, 100);
-            car.Drive(400);
-            Assert.AreEqual(, car.FuelAmount);
+            double distance = 100;
+            car.Refuel(100);
+            car.Drive(distance);
+            Assert.AreEqual(98, car.FuelAmount);
         }
 
         [Test]
         public void DriveShouldThrowInvalidOperationExceptionWhenFuelAmountIsNotEnough()
         {
             Car car = new Car("Vw", "Golf", 2, 100);
+            car.Refuel(1);
             Assert.Throws<InvalidOperationException>(() => car.Drive(200));
         }
     }
