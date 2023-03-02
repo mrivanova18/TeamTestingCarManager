@@ -28,9 +28,6 @@ namespace CarManager.Tests
             Assert.AreEqual(fuelConsumption, car.FuelConsumption);
             Assert.AreEqual(fuelCapacity, car.FuelCapacity);
             Assert.AreEqual(0, car.FuelAmount);
-
-
-
         }
 
         [Test]
@@ -40,9 +37,7 @@ namespace CarManager.Tests
             string model = null;
             double fuelConsumption = 5;
             double fuelCapacity = 40;
-
             Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
-
         }
 
         [Test]
@@ -54,21 +49,17 @@ namespace CarManager.Tests
             double fuelCapacity = 40;
 
             Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
-
-
-
         }
 
         [Test]
         public void FuelConsumptionShouldThrowArgExWhenIsBellowZero()
         {
-
-            //TO DO
+            double fuelConsumption = -5;
+            Assert.Throws<ArgumentException>(() => new Car("aaa", "bbb", fuelConsumption, 50));
         }
 
         [Test]
         public void FuelConsumptionShouldThrowArgExWhenIsZero()
-
         {
             string make = "nnnnn";
             string model = "aaa";
@@ -76,66 +67,80 @@ namespace CarManager.Tests
             double fuelCapacity = 40;
 
             Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
-
         }
 
         [Test]
         public void FuelCapacityShouldThrowArgExWhenIsZero()
-
         {
-
             var fuelCapacity = 0;
-            var ex = Assert.Throws<ArgumentException>(() => new Car("aaa", "bbb", 5, fuelCapacity));
+            Assert.Throws<ArgumentException>(() => new Car("aaa", "bbb", 5, fuelCapacity));
         }
 
-      
+        [Test]
+        public void FuelCapacityShouldThrowArgExWhenIsBellowZero()
+        {
+            var fuelCapacity = -30;
+            Assert.Throws<ArgumentException>(() => new Car("aaa", "bbb", 5, fuelCapacity));
+        }
 
-    [Test]
-    public void FuelCapacityShouldThrowArgExWhenIsBellowZero()
-    {
-        //TO DO
+
+        [TestCase(null,"aaa",4,100)]
+        [TestCase("","aaa",4,100)]
+        [TestCase("aaa",null,4,100)]
+        [TestCase("aaa","",4,100)]
+        [TestCase("aaa","bbb",-4,100)]
+        [TestCase("aaa","bbb",0,100)]
+        [TestCase("aaa","bbb",4,-100)]
+        [TestCase("aaa","bbb",4,0)]
+        public void ValidateAllProperties(string make, string model, double fuelConsumption, double fuelCapacity)
+        {
+            Assert.Throws<ArgumentException>(() => new Car(make, model, fuelConsumption, fuelCapacity));
+        }
+
+
+        [Test]
+        public void ShouldRefuelNormally()
+        {
+            var fuelCapacity = 50;
+            Car car = new Car("aaa", "bbb", 5, fuelCapacity);           
+            car.Refuel(30);
+            Assert.AreEqual(30, car.FuelAmount);
+        }
+
+        [Test]
+        public void ShouldRefuelUntillTotalFuelCapacity()
+        {
+            var fuelCapacity = 50;
+            Car car = new Car("aaa", "bbb", 5, fuelCapacity);            
+            car.Refuel(60);
+            Assert.AreEqual(50, car.FuelAmount);
+        }
+
+        [Test]        
+        public void ShouldRefuelThrowArgExWhenInputAmountIsBellowZero()
+        {
+            Car car = new Car("aaa", "bbb", 5, 50);
+            double fuelToRefuel = -6;
+            Assert.Throws<ArgumentException>(() => car.Refuel(fuelToRefuel));
+        }
+
+        [Test]
+        public void ShouldDriveNormally()
+        {
+            Car car = new Car("Vw", "Golf", 2, 100);
+            double distance = 100;
+            car.Refuel(100);
+            car.Drive(distance);
+            Assert.AreEqual(98, car.FuelAmount);
+        }
+
+        [Test]
+        public void DriveShouldThrowInvalidOperationExceptionWhenFuelAmountIsNotEnough()
+        {
+            Car car = new Car("Vw", "Golf", 2, 100);
+            car.Refuel(1);
+            Assert.Throws<InvalidOperationException>(() => car.Drive(200));
+        }
     }
 
-
-    [TestCase] 
-    public void ValidateAllProperties(string make, string model, double fuelConsumption, double fuelCapacity)
-    {
-        //TO DO
-    }
-
-
-    [Test]
-    public void ShouldRefuelNormally()
-    {
-
-        //TO DO
-    }
-
-    [Test]
-    public void ShouldRefuelUntillTotalFuelCapacity()
-    {
-        //TO DO
-    }
-
-    [Test]
-    //TO DO
-    public void ShouldRefuelThrowArgExWhenInputAmountIsBellowZero(double inputAmount)
-    {
-        //TO DO
-    }
-
-    [Test]
-    public void ShouldDriveNormally()
-    {
-        Car car = new Car("Vw", "Golf", 2, 100);
-        //TO DO
-    }
-
-    [Test]
-    public void DriveShouldThrowInvalidOperationExceptionWhenFuelAmountIsNotEnough()
-    {
-        //TO DO
-    }
 }
-
-    }
