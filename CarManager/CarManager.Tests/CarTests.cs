@@ -62,8 +62,8 @@ namespace CarManager.Tests
         [Test]
         public void FuelConsumptionShouldThrowArgExWhenIsBellowZero()
         {
-
-            //TO DO
+            double fuelConsumption = -5;
+            Assert.Throws<ArgumentException>(() => new Car("aaa", "bbb", fuelConsumption, 50));
         }
 
         [Test]
